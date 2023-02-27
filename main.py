@@ -3,7 +3,6 @@ from dynamodb.base import dynamo_test as dynamo
 
 if __name__ == '__main__':
 
-    # dynamo = DynamoDB('test', 'name', None, cursor=None)
     # put
     dynamo.put({'name': 'name01', 'amount': '1000'})
 
