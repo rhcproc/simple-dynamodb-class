@@ -15,15 +15,15 @@ class DynamoDB(Meta):
         table = self.client.Table(self.table_name)
         table.put_item(Item=item)
 
-    def scan(self, filter_expression=None,
-                                expression_attribute_values=None) -> list:
+    def scan(self, **kwargs) -> list:
         table = self.client.Table(self.table_name)
         res = None
-        if filter_expression is None: res = table.scan()
+        if kwargs.get('filter_expression') is None:
+            res = table.scan()
         else :
             res = table.scan(
-                FilterExpression=filter_expression,
-                ExpressionAttributeValues=expression_attribute_values
+                FilterExpression=kwargs.get('filter_expression'),
+                ExpressionAttributeValues=kwargs.get('expression_attribute_values')
             )
         return res['Items']
 
@@ -31,20 +31,21 @@ class DynamoDB(Meta):
         table = self.client.Table(self.table_name)
         table.delete_item(Key={self.partition_key: key})
 
-    def update(self, key: str, target: str, values=None) -> None:
+    def update(self, **kwargs) -> None:
         table = self.client.Table(self.table_name)
         table.update_item(
-            Key={self.partition_key: key},
-            UpdateExpression=f"set {target} = :{target}",
-            ExpressionAttributeValues={f":{target}": values}
+            Key={self.partition_key: kwargs.get('key')},
+            UpdateExpression=f"set {kwargs.get('target')} = :{kwargs.get('target')}",
+            ExpressionAttributeValues={f":{kwargs.get('target')}":kwargs.get('values')}
         )
 
-    def low_update(self, key: str, update_expression: str,
-                    expression_attribute_values=None) -> None:
+    def low_update(self, **kwargs) -> None:
         table = self.client.Table(self.table_name)
         table.update_item(
-            Key={self.partition_key: key},
-            UpdateExpression=update_expression,
-            ExpressionAttributeValues=expression_attribute_values
+            Key={self.partition_key: kwargs.get('key')},
+            UpdateExpression=kwargs.get('update_expression'),
+            ExpressionAttributeValues=kwargs.get('expression_attribute_values')
         )
+
+dynamo_test = DynamoDB('test', 'name', None, cursor=None)
 
