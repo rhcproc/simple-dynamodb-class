@@ -17,6 +17,7 @@ class Meta(metaclass=ABCMeta):
                 aws_secret_access_key=config.DYNAMODB_SECRET_ACCESS_KEY,
                 region_name=config.DYNAMODB_REGION_NAME)
         else: self.client = cursor
+        print("DynamoDB connection established.")
 
     @abstractmethod
     def get(self, key) -> dict:

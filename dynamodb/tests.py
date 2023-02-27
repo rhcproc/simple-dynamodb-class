@@ -4,6 +4,7 @@ import unittest
 import moto
 import boto3
 
+# python -m unittest tests.TestDynamoDB.test_get
 @moto.mock_dynamodb
 class TestDynamoDB(unittest.TestCase):
     def setUp(self):

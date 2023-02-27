@@ -48,3 +48,5 @@ class DynamoDB(Meta):
             ExpressionAttributeValues=expression_attribute_values
         )
 
+dynamo_test = DynamoDB('test', 'name', None, cursor=None)
+
