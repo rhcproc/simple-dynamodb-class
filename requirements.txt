@@ -19,5 +19,5 @@ six==1.16.0
 toml==0.10.2
 types-toml==0.10.8.3
 urllib3==1.26.14
-Werkzeug==2.2.2
+Werkzeug==2.2.3
 xmltodict==0.13.0
